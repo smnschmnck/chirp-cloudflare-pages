@@ -1,13 +1,11 @@
-import { defineConfig } from "drizzle-kit";
+import { Config } from "drizzle-kit";
 
-export default defineConfig({
+export default {
   schema: "./functions/db/schema.ts",
+  out: "./drizzle",
   driver: "d1",
   dbCredentials: {
-    dbName: "TODO_DB",
+    dbName: "CHIRP_DB",
     wranglerConfigPath: "./wrangler.toml",
   },
-  out: "./drizzle",
-  verbose: true,
-  strict: true,
-});
+} satisfies Config;
