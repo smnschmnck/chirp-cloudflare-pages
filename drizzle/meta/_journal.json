@@ -8,6 +8,27 @@
       "when": 1703878164361,
       "tag": "0000_light_wiccan",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1703878531064,
+      "tag": "0001_massive_kat_farrell",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1703878703222,
+      "tag": "0002_serious_jackpot",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1703878769175,
+      "tag": "0003_glamorous_shatterstar",
+      "breakpoints": true
     }
   ]
 }
