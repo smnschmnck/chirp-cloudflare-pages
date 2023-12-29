@@ -3,7 +3,7 @@ import { appRouter } from "../server/router";
 import { EventContext, D1Database } from "@cloudflare/workers-types";
 import { createContext } from "../server/context";
 
-type Env = {
+export type Env = {
   DB: D1Database;
 };
 
@@ -12,6 +12,6 @@ export function onRequest(context: EventContext<Env, string, unknown>) {
     endpoint: "/trpc",
     req: context.request as unknown as Request,
     router: appRouter,
-    createContext,
+    createContext: (opts) => createContext({ env: context.env, ...opts }),
   });
 }

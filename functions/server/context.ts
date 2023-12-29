@@ -1,11 +1,14 @@
+import { Env } from "@functions/trpc/[trpc]";
 import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
+import { drizzle } from "drizzle-orm/d1";
 
-export function createContext({
-  req,
-  resHeaders,
-}: FetchCreateContextFnOptions) {
-  const user = { name: req.headers.get("username") ?? "anonymous" };
-  return { req, resHeaders, user };
+type ContextOptions = FetchCreateContextFnOptions & {
+  env: Env;
+};
+
+export function createContext({ req, resHeaders, env }: ContextOptions) {
+  const db = drizzle(env.DB);
+  return { req, resHeaders, db };
 }
 
 export type Context = Awaited<ReturnType<typeof createContext>>;

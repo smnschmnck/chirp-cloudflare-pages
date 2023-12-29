@@ -2,17 +2,18 @@ import { FC, FormEvent, useState } from "react";
 import { trpc } from "../utils/trpc";
 
 export const Home: FC = () => {
-  const { mutate } = trpc.greet.useMutation();
-  const [name, setName] = useState("");
-  const [greeting, setGreeting] = useState("");
+  const { data: posts, refetch: refetchPosts } = trpc.getAllPosts.useQuery();
+  const [postContent, setPostContent] = useState("");
+  const { mutate: sendPost } = trpc.createPost.useMutation();
 
-  const handleSubmit = (event: FormEvent) => {
+  const submitPost = (event: FormEvent) => {
     event.preventDefault();
-    mutate(
-      { name },
+    sendPost(
+      { content: postContent },
       {
-        onSuccess: async (res) => {
-          setGreeting(res.greeting);
+        onSuccess: () => {
+          refetchPosts();
+          setPostContent("");
         },
       }
     );
@@ -20,11 +21,14 @@ export const Home: FC = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input value={name} onChange={(e) => setName(e.target.value)} />
+      <form onSubmit={submitPost}>
+        <input
+          value={postContent}
+          onChange={(e) => setPostContent(e.target.value)}
+        />
         <button type="submit">Submit</button>
       </form>
-      <p>Greeting: {greeting}</p>
+      <ul>{posts?.map((post) => <li>{post.content}</li>)}</ul>
     </div>
   );
 };

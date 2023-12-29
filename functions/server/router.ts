@@ -1,20 +1,24 @@
+import { posts } from "@functions/db/schema";
 import { initTRPC } from "@trpc/server";
-import { z } from "zod";
 import { Context } from "./context";
+import { z } from "zod";
 
 export const t = initTRPC.context<Context>().create();
 
 export const appRouter = t.router({
-  greet: t.procedure
-    .input(
-      z.object({
-        name: z.string().min(1),
-      })
-    )
-    .mutation(({ input }) => {
-      return {
-        greeting: `Hello ${input.name}, from tRPC`,
-      };
+  getAllPosts: t.procedure.query(async ({ ctx }) => {
+    const { db } = ctx;
+    const allPosts = await db.select().from(posts).limit(100);
+    return allPosts;
+  }),
+  createPost: t.procedure
+    .input(z.object({ content: z.string().min(1) }))
+    .mutation(async ({ ctx, input }) => {
+      const { db } = ctx;
+      await db.insert(posts).values({
+        id: crypto.randomUUID(),
+        content: input.content,
+      });
     }),
 });
 
