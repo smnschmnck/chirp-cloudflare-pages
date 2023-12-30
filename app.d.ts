@@ -1,7 +1,6 @@
-import { User, UserSession } from "@functions/db/schema.ts";
-
+/// <reference types="lucia" />
 declare namespace Lucia {
   type Auth = import("./functions/server/lucia/lucia.ts").Auth;
-  type DatabaseUserAttributes = User;
-  type DatabaseSessionAttributes = UserSession;
+  type DatabaseUserAttributes = { username: string };
+  type DatabaseSessionAttributes = object;
 }

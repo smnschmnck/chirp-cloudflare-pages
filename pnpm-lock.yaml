@@ -11,6 +11,9 @@ dependencies:
   '@lucia-auth/adapter-sqlite':
     specifier: ^2.0.1
     version: 2.0.1(lucia@2.7.6)
+  '@lucia-auth/oauth':
+    specifier: ^3.5.0
+    version: 3.5.0(lucia@2.7.6)
   '@tanstack/react-query':
     specifier: ^4.0.0
     version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
@@ -2719,6 +2722,14 @@ packages:
         optional: true
       better-sqlite3:
         optional: true
+    dependencies:
+      lucia: 2.7.6
+    dev: false
+
+  /@lucia-auth/oauth@3.5.0(lucia@2.7.6):
+    resolution: {integrity: sha512-JSwAMVwlDJtbvfcJV1nbkv41OD830pgICrx8zFT71SYd5I1MnEQ+GqMTXBGRyxzc5XlLatT8ZS1Jt0k81487xg==}
+    peerDependencies:
+      lucia: ^2.0.0
     dependencies:
       lucia: 2.7.6
     dev: false

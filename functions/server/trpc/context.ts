@@ -1,4 +1,4 @@
-import { Env } from "@functions/trpc/[trpc]";
+import { Env } from "@functions/types/env";
 import { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 import { drizzle } from "drizzle-orm/d1";
 
