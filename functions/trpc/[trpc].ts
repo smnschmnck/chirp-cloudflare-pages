@@ -1,7 +1,7 @@
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
-import { appRouter } from "../server/router";
+import { appRouter } from "../server/trpc/router";
 import { EventContext, D1Database } from "@cloudflare/workers-types";
-import { createContext } from "../server/context";
+import { createContext } from "../server/trpc/context";
 
 export type Env = {
   DB: D1Database;
