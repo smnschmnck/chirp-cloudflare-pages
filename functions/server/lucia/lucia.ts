@@ -10,6 +10,9 @@ export const initializeLucia = (db: D1Database) => {
       session: "user_session",
     }),
     middleware: web(),
+    sessionCookie: {
+      expires: false,
+    },
     //TODO: Add actual env
     env: "DEV",
   });

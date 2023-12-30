@@ -1,4 +1,4 @@
-import { sql } from "drizzle-orm";
+import { InferSelectModel, sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const posts = sqliteTable("posts", {
@@ -8,10 +8,13 @@ export const posts = sqliteTable("posts", {
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
 });
+export type Post = InferSelectModel<typeof posts>;
 
 export const user = sqliteTable("user", {
   id: text("id", { length: 15 }).notNull().primaryKey(),
+  username: text("username").unique(),
 });
+export type User = InferSelectModel<typeof user>;
 
 export const userKey = sqliteTable("user_key", {
   id: text("id", { length: 255 }).notNull().primaryKey(),
@@ -20,6 +23,7 @@ export const userKey = sqliteTable("user_key", {
     .references(() => user.id, { onDelete: "cascade" }),
   hashedPassword: text("hashed_password", { length: 255 }),
 });
+export type UserKey = InferSelectModel<typeof userKey>;
 
 export const userSession = sqliteTable("user_session", {
   id: text("id", { length: 127 }).notNull().primaryKey(),
@@ -29,3 +33,4 @@ export const userSession = sqliteTable("user_session", {
   activeExpires: integer("active_expires", { mode: "number" }).notNull(),
   idleExpires: integer("idle_expires", { mode: "number" }).notNull(),
 });
+export type UserSession = InferSelectModel<typeof userSession>;
