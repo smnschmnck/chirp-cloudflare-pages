@@ -51,7 +51,11 @@ export const appRouter = t.router({
     return allPosts;
   }),
   createPost: protectedProcedure
-    .input(z.object({ content: z.string().min(1) }))
+    .input(
+      z.object({
+        content: z.string().min(1).emoji(),
+      })
+    )
     .mutation(async ({ ctx, input }) => {
       const { db, session } = ctx;
       await db.insert(posts).values({
