@@ -46,7 +46,6 @@ export const Home: FC = () => {
     undefined,
     {
       retry: (_, error) => error.data?.code !== "UNAUTHORIZED",
-      retryOnMount: false,
     }
   );
   const { data: posts, refetch: refetchPosts } = trpc.getAllPosts.useQuery();
