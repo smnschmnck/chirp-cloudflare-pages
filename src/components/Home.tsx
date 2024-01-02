@@ -17,22 +17,22 @@ const CreatePostForm: FC<{ refetchPosts: () => void }> = ({ refetchPosts }) => {
           refetchPosts();
           setPostContent("");
         },
-      }
+      },
     );
   };
 
   return (
     <form
       onSubmit={submitPost}
-      className="h-24 px-4 w-full border-b gap-4 flex items-center"
+      className="flex h-24 w-full items-center gap-4 border-b px-4"
     >
       <input
         value={postContent}
         onChange={(e) => setPostContent(e.target.value)}
         placeholder="Post something"
-        className="w-full bg-transparent h-10 px-4 rounded-full border border-gray-700"
+        className="h-10 w-full rounded-full border border-gray-700 bg-transparent px-4"
       />
-      <button className="h-10 px-4 bg-blue-500 rounded-full flex justify-center items-center hover:bg-blue-400 transition">
+      <button className="flex h-10 items-center justify-center rounded-full bg-blue-500 px-4 transition hover:bg-blue-400">
         Post
       </button>
     </form>
@@ -46,32 +46,32 @@ export const Home: FC = () => {
     undefined,
     {
       retry: (_, error) => error.data?.code !== "UNAUTHORIZED",
-    }
+    },
   );
   const { data: posts, refetch: refetchPosts } = trpc.getAllPosts.useQuery();
 
   if (isLoadingUser) {
     return (
-      <div className="w-full h-full flex justify-center items-center">
+      <div className="flex h-full w-full items-center justify-center">
         <Spinner />
       </div>
     );
   }
 
   return (
-    <div className="w-full flex justify-center h-full bg-gray-950 text-white">
-      <div className="px-12 py-6 w-full">
-        <a className="font-bold text-xl" href="/">
+    <div className="flex h-full w-full justify-center bg-gray-950 text-white">
+      <div className="w-full px-12 py-6">
+        <a className="text-xl font-bold" href="/">
           Chirp
         </a>
       </div>
-      <div className="flex flex-col border-x h-full text-white min-w-96">
+      <div className="flex h-full min-w-96 flex-col border-x text-white">
         {!!user && <CreatePostForm refetchPosts={refetchPosts} />}
         <div className="h-full overflow-y-scroll">
           <ul>
             {posts?.map((p) => (
               <li
-                className="border-b h-16 flex px-4 flex-col justify-center"
+                className="flex h-16 flex-col justify-center border-b px-4"
                 key={p.id}
               >
                 <div className="flex justify-between text-sm">
@@ -86,21 +86,21 @@ export const Home: FC = () => {
           </ul>
         </div>
       </div>
-      <div className="px-12 py-6 w-full flex justify-end items-start">
+      <div className="flex w-full items-start justify-end px-12 py-6">
         {!user && (
           <a
             href="login/github"
-            className="h-10 px-4 bg-blue-500 rounded-full flex justify-center items-center hover:bg-blue-400 transition"
+            className="flex h-10 items-center justify-center rounded-full bg-blue-500 px-4 transition hover:bg-blue-400"
           >
             Sign in
           </a>
         )}
         {!!user && (
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             <p className="font-bold">{user.user.githubUsername}</p>
             <a
               href="/logout"
-              className="h-10 px-4 bg-blue-500 rounded-full flex justify-center items-center hover:bg-blue-400 transition"
+              className="flex h-10 items-center justify-center rounded-full bg-blue-500 px-4 transition hover:bg-blue-400"
             >
               Sign out
             </a>
