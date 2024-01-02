@@ -1,8 +1,8 @@
-import { posts } from "@functions/db/schema";
+import { posts, user } from "@functions/db/schema";
 import { TRPCError, initTRPC } from "@trpc/server";
 import { Context } from "./context";
 import { z } from "zod";
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { initializeLucia } from "../lucia/lucia";
 
 export const t = initTRPC.context<Context>().create();
@@ -29,11 +29,18 @@ const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
 });
 
 export const appRouter = t.router({
+  getUser: protectedProcedure.query(async ({ ctx }) => {
+    const { session } = ctx;
+    return {
+      user: session.user,
+    };
+  }),
   getAllPosts: publicProcedure.query(async ({ ctx }) => {
     const { db } = ctx;
     const allPosts = await db
       .select()
       .from(posts)
+      .fullJoin(user, eq(posts.author, user.id))
       .orderBy(desc(posts.created_at))
       .limit(100);
     return allPosts;
@@ -41,9 +48,10 @@ export const appRouter = t.router({
   createPost: protectedProcedure
     .input(z.object({ content: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { db, session } = ctx;
       await db.insert(posts).values({
         id: crypto.randomUUID(),
+        author: session.user.userId,
         content: input.content,
       });
     }),

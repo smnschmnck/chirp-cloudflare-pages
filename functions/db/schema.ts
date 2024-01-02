@@ -4,6 +4,9 @@ import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 export const posts = sqliteTable("posts", {
   id: text("id").primaryKey(),
   content: text("content"),
+  author: text("author", { length: 15 })
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
   created_at: text("created_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
