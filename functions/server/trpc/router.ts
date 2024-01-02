@@ -38,7 +38,6 @@ export const appRouter = t.router({
     if (!session) {
       return {
         authed: false,
-        user: null,
       } as const;
     }
 
