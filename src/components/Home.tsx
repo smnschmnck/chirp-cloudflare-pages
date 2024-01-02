@@ -1,6 +1,8 @@
 import { FC, FormEvent, useState } from "react";
 import { trpc } from "../utils/trpc";
 import { Spinner } from "./Spinner";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 const CreatePostForm: FC<{ refetchPosts: () => void }> = ({ refetchPosts }) => {
   const [postContent, setPostContent] = useState("");
@@ -37,6 +39,8 @@ const CreatePostForm: FC<{ refetchPosts: () => void }> = ({ refetchPosts }) => {
   );
 };
 
+dayjs.extend(relativeTime);
+
 export const Home: FC = () => {
   const { data: user, isLoading: isLoadingUser } = trpc.getUser.useQuery(
     undefined,
@@ -68,7 +72,12 @@ export const Home: FC = () => {
                 className="border-b h-16 flex px-4 flex-col justify-center"
                 key={p.id}
               >
-                <p className="text-sm">{p.author}</p>
+                <div className="flex justify-between text-sm">
+                  <p>{p.author}</p>
+                  <p className="text-gray-500">
+                    {dayjs(p.timestamp).fromNow()}
+                  </p>
+                </div>
                 <p>{p.content}</p>
               </li>
             ))}
