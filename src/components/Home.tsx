@@ -51,7 +51,7 @@ export const Home: FC = () => {
   });
   const { data: posts, refetch: refetchPosts } = trpc.getAllPosts.useQuery();
 
-  if (!!isUserError && !!isUserSuccess) {
+  if (!isUserError && !isUserSuccess) {
     return (
       <div className="w-full h-full flex justify-center items-center">
         <Spinner />
