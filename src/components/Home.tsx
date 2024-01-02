@@ -42,16 +42,15 @@ const CreatePostForm: FC<{ refetchPosts: () => void }> = ({ refetchPosts }) => {
 dayjs.extend(relativeTime);
 
 export const Home: FC = () => {
-  const {
-    data: user,
-    isSuccess: isUserSuccess,
-    isError: isUserError,
-  } = trpc.getUser.useQuery(undefined, {
-    retry: (_, error) => error.data?.code !== "UNAUTHORIZED",
-  });
+  const { data: user, isLoading: isLoadingUser } = trpc.getUser.useQuery(
+    undefined,
+    {
+      retry: (_, error) => error.data?.code !== "UNAUTHORIZED",
+    }
+  );
   const { data: posts, refetch: refetchPosts } = trpc.getAllPosts.useQuery();
 
-  if (!isUserError && !isUserSuccess) {
+  if (isLoadingUser) {
     return (
       <div className="w-full h-full flex justify-center items-center">
         <Spinner />
