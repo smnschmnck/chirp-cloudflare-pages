@@ -8,7 +8,7 @@ type ContextOptions = FetchCreateContextFnOptions & {
 
 export function createContext({ req, resHeaders, env }: ContextOptions) {
   const db = drizzle(env.DB);
-  return { req, resHeaders, db };
+  return { req, resHeaders, db, env };
 }
 
 export type Context = Awaited<ReturnType<typeof createContext>>;

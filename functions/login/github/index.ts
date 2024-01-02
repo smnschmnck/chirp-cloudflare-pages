@@ -6,11 +6,12 @@ import { Env } from "@functions/types/env";
 export const onRequest = async (
   context: EventContext<Env, string, unknown>
 ) => {
-  const githubAuth = initializeGithubAuth(context.env.DB);
+  const { env } = context;
+  const githubAuth = initializeGithubAuth(env);
   const [url, state] = await githubAuth.getAuthorizationUrl();
   const stateCookie = serializeCookie("github_oauth_state", state, {
     httpOnly: true,
-    secure: false, //TODO `true` for production
+    secure: env.ENVIRONMENT !== "development",
     path: "/",
     maxAge: 60 * 60,
   });

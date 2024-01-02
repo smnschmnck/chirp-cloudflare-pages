@@ -11,8 +11,8 @@ export const onRequest = async (
   context: EventContext<Env, string, unknown>
 ) => {
   const { request, env } = context;
-  const githubAuth = initializeGithubAuth(env.DB);
-  const auth = initializeLucia(env.DB);
+  const githubAuth = initializeGithubAuth(env);
+  const auth = initializeLucia(env);
   const cookies = parseCookie(request.headers.get("Cookie") ?? "");
   const storedState = cookies.github_oauth_state;
   const url = new URL(request.url);

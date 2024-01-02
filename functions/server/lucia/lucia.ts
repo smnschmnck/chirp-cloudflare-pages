@@ -2,8 +2,10 @@ import { lucia } from "lucia";
 import { d1 } from "@lucia-auth/adapter-sqlite";
 import { web } from "lucia/middleware";
 import { github } from "@lucia-auth/oauth/providers";
+import { Env } from "@functions/types/env";
 
-export const initializeLucia = (db: D1Database) => {
+export const initializeLucia = (env: Env) => {
+  const db = env.DB;
   const auth = lucia({
     adapter: d1(db, {
       user: "user",
@@ -19,18 +21,16 @@ export const initializeLucia = (db: D1Database) => {
         githubUsername: data.username,
       };
     },
-    //TODO: Add actual env
-    env: "DEV",
+    env: env.ENVIRONMENT === "development" ? "DEV" : "PROD",
   });
   return auth;
 };
 
-export const initializeGithubAuth = (db: D1Database) => {
-  const luciaAuth = initializeLucia(db);
+export const initializeGithubAuth = (env: Env) => {
+  const luciaAuth = initializeLucia(env);
   const githubAuth = github(luciaAuth, {
-    //TODO add creds
-    clientId: "TODO",
-    clientSecret: "TODO",
+    clientId: env.GITHUB_CLIENT_ID,
+    clientSecret: env.GITHUB_CLIENT_SECRET,
   });
 
   return githubAuth;
