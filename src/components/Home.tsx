@@ -1,5 +1,6 @@
 import { FC, FormEvent, useState } from "react";
 import { trpc } from "../utils/trpc";
+import { Spinner } from "./Spinner";
 
 const CreatePostForm: FC<{ refetchPosts: () => void }> = ({ refetchPosts }) => {
   const [postContent, setPostContent] = useState("");
@@ -37,11 +38,18 @@ const CreatePostForm: FC<{ refetchPosts: () => void }> = ({ refetchPosts }) => {
 };
 
 export const Home: FC = () => {
-  const { data: user, isLoading: isLoadingUser } = trpc.getUser.useQuery();
+  const { data: user, isLoading: isLoadingUser } = trpc.getUser.useQuery(
+    undefined,
+    { retry: (_, error) => error.data?.code !== "UNAUTHORIZED" }
+  );
   const { data: posts, refetch: refetchPosts } = trpc.getAllPosts.useQuery();
 
   if (isLoadingUser) {
-    return <></>;
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
   }
 
   return (
@@ -80,7 +88,7 @@ export const Home: FC = () => {
           <div className="flex gap-4 items-center">
             <p className="font-bold">{user.user.githubUsername}</p>
             <a
-              href="/todo"
+              href="/logout"
               className="h-10 px-4 bg-blue-500 rounded-full flex justify-center items-center hover:bg-blue-400 transition"
             >
               Sign out

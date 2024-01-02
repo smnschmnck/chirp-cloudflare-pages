@@ -53,7 +53,7 @@ export const appRouter = t.router({
   createPost: protectedProcedure
     .input(
       z.object({
-        content: z.string().min(1).emoji(),
+        content: z.string().min(1),
       })
     )
     .mutation(async ({ ctx, input }) => {
