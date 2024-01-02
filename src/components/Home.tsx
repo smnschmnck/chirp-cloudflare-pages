@@ -53,6 +53,8 @@ export const Home: FC = () => {
     );
   }
 
+  const isUserAuthed = !!userData?.authed;
+
   return (
     <div className="flex h-full w-full justify-center bg-gray-950 text-white">
       <div className="w-full px-12 py-6">
@@ -61,7 +63,7 @@ export const Home: FC = () => {
         </a>
       </div>
       <div className="flex h-full min-w-96 flex-col border-x text-white">
-        {!!userData?.authed && <CreatePostForm refetchPosts={refetchPosts} />}
+        {isUserAuthed && <CreatePostForm refetchPosts={refetchPosts} />}
         <div className="h-full overflow-y-scroll">
           <ul>
             {posts?.map((p) => (
@@ -82,7 +84,7 @@ export const Home: FC = () => {
         </div>
       </div>
       <div className="flex w-full items-start justify-end px-12 py-6">
-        {!userData?.authed && (
+        {!isUserAuthed && (
           <a
             href="login/github"
             className="flex h-10 items-center justify-center rounded-full bg-blue-500 px-4 transition hover:bg-blue-400"
@@ -90,7 +92,7 @@ export const Home: FC = () => {
             Sign in
           </a>
         )}
-        {!!userData?.authed && (
+        {isUserAuthed && (
           <div className="flex items-center gap-4">
             <p className="font-bold">{userData.user.githubUsername}</p>
             <a
