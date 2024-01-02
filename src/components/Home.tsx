@@ -26,19 +26,23 @@ const CreatePostForm: FC<{ refetchPosts: () => void }> = ({ refetchPosts }) => {
       <input
         value={postContent}
         onChange={(e) => setPostContent(e.target.value)}
-        placeholder="Submit a post"
+        placeholder="Post something"
         className="w-full bg-transparent h-10 px-4 rounded-full border border-gray-700"
       />
       <button className="h-10 px-4 bg-blue-500 rounded-full flex justify-center items-center hover:bg-blue-400 transition">
-        Submit
+        Post
       </button>
     </form>
   );
 };
 
 export const Home: FC = () => {
-  const { data: user } = trpc.getUser.useQuery();
+  const { data: user, isLoading: isLoadingUser } = trpc.getUser.useQuery();
   const { data: posts, refetch: refetchPosts } = trpc.getAllPosts.useQuery();
+
+  if (isLoadingUser) {
+    return <></>;
+  }
 
   return (
     <div className="w-full flex justify-between h-full bg-gray-950 text-white">
