@@ -53,13 +53,13 @@ export const Home: FC = () => {
   }
 
   return (
-    <div className="w-full flex justify-between h-full bg-gray-950 text-white">
-      <div className="px-12 py-6 ">
+    <div className="w-full flex justify-center h-full bg-gray-950 text-white">
+      <div className="px-12 py-6 w-full">
         <a className="font-bold text-xl" href="/">
           Chirp
         </a>
       </div>
-      <div className="flex flex-col border-x h-full text-white w-96">
+      <div className="flex flex-col border-x h-full text-white min-w-96">
         {!!user && <CreatePostForm refetchPosts={refetchPosts} />}
         <div className="h-full overflow-y-scroll">
           <ul>
@@ -75,7 +75,7 @@ export const Home: FC = () => {
           </ul>
         </div>
       </div>
-      <div className="px-12 py-6 ">
+      <div className="px-12 py-6 w-full flex justify-end items-start">
         {!user && (
           <a
             href="login/github"
