@@ -62,13 +62,13 @@ export const Home: FC = () => {
           Chirp
         </a>
       </div>
-      <div className="flex h-full min-w-96 flex-col border-x text-white">
+      <div className="flex h-full min-w-96 max-w-96 flex-col border-x text-white">
         {hasUser && <CreatePostForm refetchPosts={refetchPosts} />}
         <div className="h-full overflow-y-scroll">
           <ul>
             {posts?.map((p) => (
               <li
-                className="flex h-16 flex-col justify-center border-b px-4"
+                className="flex min-h-16 max-w-full flex-col justify-center border-b px-4 py-2"
                 key={p.id}
               >
                 <div className="flex justify-between text-sm">

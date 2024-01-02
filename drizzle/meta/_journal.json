@@ -57,6 +57,20 @@
       "when": 1704214003505,
       "tag": "0007_complex_salo",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1704235787990,
+      "tag": "0008_parched_warhawk",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1704235832224,
+      "tag": "0009_lovely_carmella_unuscione",
+      "breakpoints": true
     }
   ]
 }

@@ -3,7 +3,7 @@ import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const posts = sqliteTable("posts", {
   id: text("id").primaryKey(),
-  content: text("content"),
+  content: text("content", { length: 280 }),
   author: text("author", { length: 15 })
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
