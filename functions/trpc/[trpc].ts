@@ -6,7 +6,7 @@ import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 export function onRequest(context: EventContext<Env, string, unknown>) {
   return fetchRequestHandler({
-    endpoint: "/api/trpc",
+    endpoint: "/trpc",
     req: context.request as unknown as Request,
     router: appRouter,
     createContext: (opts) => createContext({ env: context.env, ...opts }),
