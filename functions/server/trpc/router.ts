@@ -35,15 +35,8 @@ export const appRouter = t.router({
     const authRequest = auth.handleRequest(req);
     const session = await authRequest.validate();
 
-    if (!session) {
-      return {
-        authed: false,
-      } as const;
-    }
-
     return {
-      authed: true,
-      user: session.user,
+      user: session?.user,
     } as const;
   }),
   getAllPosts: publicProcedure.query(async ({ ctx }) => {
