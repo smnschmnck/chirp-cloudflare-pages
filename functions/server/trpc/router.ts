@@ -48,7 +48,6 @@ export const appRouter = t.router({
       .innerJoin(user, eq(posts.author, user.id))
       .orderBy(desc(posts.created_at))
       .limit(100);
-    console.log("allPosts", allPosts);
     return allPosts;
   }),
   createPost: protectedProcedure
