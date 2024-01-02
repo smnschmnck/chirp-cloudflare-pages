@@ -48,12 +48,9 @@ export const Home: FC = () => {
         <div className="h-full overflow-y-scroll">
           <ul>
             {posts?.map((p) => (
-              <li
-                className="border-b h-12 flex px-4 items-center"
-                key={p.posts?.id}
-              >
-                <p>{p.user?.username}</p>
-                <p>{p.posts?.content}</p>
+              <li className="border-b h-12 flex px-4 items-center" key={p.id}>
+                <p>{p.author}</p>
+                <p>{p.content}</p>
               </li>
             ))}
           </ul>

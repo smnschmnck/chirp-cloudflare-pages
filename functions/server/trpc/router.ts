@@ -38,11 +38,17 @@ export const appRouter = t.router({
   getAllPosts: publicProcedure.query(async ({ ctx }) => {
     const { db } = ctx;
     const allPosts = await db
-      .select()
+      .select({
+        id: posts.id,
+        content: posts.content,
+        author: user.username,
+        timestamp: posts.created_at,
+      })
       .from(posts)
-      .fullJoin(user, eq(posts.author, user.id))
+      .innerJoin(user, eq(posts.author, user.id))
       .orderBy(desc(posts.created_at))
       .limit(100);
+    console.log("allPosts", allPosts);
     return allPosts;
   }),
   createPost: protectedProcedure
