@@ -42,12 +42,7 @@ const CreatePostForm: FC<{ refetchPosts: () => void }> = ({ refetchPosts }) => {
 dayjs.extend(relativeTime);
 
 export const Home: FC = () => {
-  const { data: user, isLoading: isLoadingUser } = trpc.getUser.useQuery(
-    undefined,
-    {
-      retry: (_, error) => error.data?.code !== "UNAUTHORIZED",
-    },
-  );
+  const { data: userData, isLoading: isLoadingUser } = trpc.getUser.useQuery();
   const { data: posts, refetch: refetchPosts } = trpc.getAllPosts.useQuery();
 
   if (isLoadingUser) {
@@ -66,7 +61,7 @@ export const Home: FC = () => {
         </a>
       </div>
       <div className="flex h-full min-w-96 flex-col border-x text-white">
-        {!!user && <CreatePostForm refetchPosts={refetchPosts} />}
+        {!!userData?.authed && <CreatePostForm refetchPosts={refetchPosts} />}
         <div className="h-full overflow-y-scroll">
           <ul>
             {posts?.map((p) => (
@@ -87,7 +82,7 @@ export const Home: FC = () => {
         </div>
       </div>
       <div className="flex w-full items-start justify-end px-12 py-6">
-        {!user && (
+        {!userData?.authed && (
           <a
             href="login/github"
             className="flex h-10 items-center justify-center rounded-full bg-blue-500 px-4 transition hover:bg-blue-400"
@@ -95,9 +90,9 @@ export const Home: FC = () => {
             Sign in
           </a>
         )}
-        {!!user && (
+        {!!userData?.authed && (
           <div className="flex items-center gap-4">
-            <p className="font-bold">{user.user.githubUsername}</p>
+            <p className="font-bold">{userData.user.githubUsername}</p>
             <a
               href="/logout"
               className="flex h-10 items-center justify-center rounded-full bg-blue-500 px-4 transition hover:bg-blue-400"

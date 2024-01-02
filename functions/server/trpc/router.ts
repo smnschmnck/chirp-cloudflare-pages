@@ -29,11 +29,23 @@ const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
 });
 
 export const appRouter = t.router({
-  getUser: protectedProcedure.query(async ({ ctx }) => {
-    const { session } = ctx;
+  getUser: publicProcedure.query(async ({ ctx }) => {
+    const { req } = ctx;
+    const auth = initializeLucia(ctx.env);
+    const authRequest = auth.handleRequest(req);
+    const session = await authRequest.validate();
+
+    if (!session) {
+      return {
+        authed: false,
+        user: null,
+      } as const;
+    }
+
     return {
+      authed: true,
       user: session.user,
-    };
+    } as const;
   }),
   getAllPosts: publicProcedure.query(async ({ ctx }) => {
     const { db } = ctx;
@@ -54,7 +66,7 @@ export const appRouter = t.router({
     .input(
       z.object({
         content: z.string().min(1),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const { db, session } = ctx;
