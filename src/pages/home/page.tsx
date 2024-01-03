@@ -1,9 +1,8 @@
 import { FC, FormEvent, useState } from "react";
 import { trpc } from "../../utils/trpc";
-import { Spinner } from "../../components/Spinner";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import { Link } from "@tanstack/react-router";
+import { PostsList } from "../../components/PostsList";
+import { Spinner } from "../../components/ui/Spinner";
 
 const CreatePostForm: FC<{ refetchPosts: () => void }> = ({ refetchPosts }) => {
   const [postContent, setPostContent] = useState("");
@@ -40,8 +39,6 @@ const CreatePostForm: FC<{ refetchPosts: () => void }> = ({ refetchPosts }) => {
   );
 };
 
-dayjs.extend(relativeTime);
-
 export const HomePage: FC = () => {
   const { data: userData, isLoading: isLoadingUser } = trpc.getUser.useQuery();
   const { data: posts, refetch: refetchPosts } = trpc.getAllPosts.useQuery();
@@ -65,30 +62,7 @@ export const HomePage: FC = () => {
       </div>
       <div className="flex h-full min-w-96 max-w-96 flex-col border-x text-white">
         {hasUser && <CreatePostForm refetchPosts={refetchPosts} />}
-        <div className="h-full overflow-y-scroll">
-          <ul>
-            {posts?.map((p) => (
-              <li
-                key={p.id}
-                className="flex min-h-16 max-w-full items-center gap-3 border-b px-4 py-2"
-              >
-                <img
-                  src={p.authorPicture ?? ""}
-                  className="h-10 w-10 overflow-hidden rounded-full"
-                />
-                <div className="grow">
-                  <div className="flex justify-between text-sm">
-                    <p>@{p.author}</p>
-                    <p className="text-gray-500">
-                      {dayjs(p.timestamp).fromNow()}
-                    </p>
-                  </div>
-                  <p>{p.content}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <PostsList posts={posts ?? []} />
       </div>
       <div className="flex w-full items-start justify-end px-12 py-6">
         {!hasUser && (

@@ -55,6 +55,25 @@ export const appRouter = t.router({
       .limit(100);
     return allPosts;
   }),
+  getAllPostsByUser: publicProcedure
+    .input(z.object({ username: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const { db } = ctx;
+      const allPosts = await db
+        .select({
+          id: posts.id,
+          content: posts.content,
+          author: user.username,
+          authorPicture: user.profilePictureUrl,
+          timestamp: posts.created_at,
+        })
+        .from(posts)
+        .where(eq(posts.author, input.username))
+        .innerJoin(user, eq(posts.author, user.id))
+        .orderBy(desc(posts.created_at))
+        .limit(100);
+      return allPosts;
+    }),
   createPost: protectedProcedure
     .input(
       z.object({
