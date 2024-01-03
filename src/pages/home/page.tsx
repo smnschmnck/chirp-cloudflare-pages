@@ -31,7 +31,7 @@ const CreatePostForm: FC<{ refetchPosts: () => void }> = ({ refetchPosts }) => {
         placeholder="Post something"
         className="h-10 w-full rounded-full border border-gray-700 bg-transparent px-4"
       />
-      <button className="flex h-10 items-center justify-center rounded-full bg-blue-500 px-4 transition hover:bg-blue-400">
+      <button className="flex h-10 min-w-24 items-center justify-center rounded-full bg-blue-500 px-4 transition hover:bg-blue-400">
         Post
       </button>
     </form>
@@ -53,7 +53,7 @@ export const HomePage: FC = () => {
   const hasUser = !!userData?.user;
 
   return (
-    <div className="flex h-full min-w-96 max-w-96 flex-col border-x text-white">
+    <div className="flex h-full w-[2000px] flex-col border-x text-white">
       {hasUser && <CreatePostForm refetchPosts={refetchPosts} />}
       <PostsList posts={posts ?? []} />
     </div>

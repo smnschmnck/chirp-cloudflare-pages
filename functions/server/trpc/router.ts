@@ -39,6 +39,31 @@ export const appRouter = t.router({
       user: session?.user,
     } as const;
   }),
+  getUserInfo: publicProcedure
+    .input(z.object({ username: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const { db } = ctx;
+
+      const dbUser = await db
+        .select({
+          username: user.username,
+          id: user.id,
+          profilePictureUrl: user.profilePictureUrl,
+        })
+        .from(user)
+        .where(eq(user.username, input.username))
+        .limit(1)
+        .then((rows) => rows.at(0));
+
+      if (!dbUser) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: `User: ${input.username} not found`,
+        });
+      }
+
+      return { user: dbUser };
+    }),
   getAllPosts: publicProcedure.query(async ({ ctx }) => {
     const { db } = ctx;
     const allPosts = await db
