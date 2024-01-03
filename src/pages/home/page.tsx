@@ -1,8 +1,9 @@
 import { FC, FormEvent, useState } from "react";
-import { trpc } from "../utils/trpc";
-import { Spinner } from "../components/Spinner";
+import { trpc } from "../../utils/trpc";
+import { Spinner } from "../../components/Spinner";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { Link } from "@tanstack/react-router";
 
 const CreatePostForm: FC<{ refetchPosts: () => void }> = ({ refetchPosts }) => {
   const [postContent, setPostContent] = useState("");
@@ -41,7 +42,7 @@ const CreatePostForm: FC<{ refetchPosts: () => void }> = ({ refetchPosts }) => {
 
 dayjs.extend(relativeTime);
 
-export const Home: FC = () => {
+export const HomePage: FC = () => {
   const { data: userData, isLoading: isLoadingUser } = trpc.getUser.useQuery();
   const { data: posts, refetch: refetchPosts } = trpc.getAllPosts.useQuery();
 
@@ -85,12 +86,12 @@ export const Home: FC = () => {
       </div>
       <div className="flex w-full items-start justify-end px-12 py-6">
         {!hasUser && (
-          <a
-            href="login/github"
+          <Link
+            to="/sign-in"
             className="flex h-10 items-center justify-center rounded-full bg-blue-500 px-4 transition hover:bg-blue-400"
           >
             Sign in
-          </a>
+          </Link>
         )}
         {hasUser && (
           <div className="flex items-center gap-4">
