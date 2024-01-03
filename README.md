@@ -1,5 +1,7 @@
 # Chirp
 
+Twitter clone hosted on Cloudflare Pages using Pages Functions as the backend and Cloudflare D1 as the primary database.
+
 Tech used:
  - React
  - TypeScript
