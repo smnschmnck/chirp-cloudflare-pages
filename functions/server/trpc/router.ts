@@ -50,7 +50,7 @@ export const appRouter = t.router({
         timestamp: posts.created_at,
       })
       .from(posts)
-      .innerJoin(user, eq(posts.author, user.id))
+      .innerJoin(user, eq(posts.author, user.username))
       .orderBy(desc(posts.created_at))
       .limit(100);
     return allPosts;
@@ -69,7 +69,7 @@ export const appRouter = t.router({
         })
         .from(posts)
         .where(eq(posts.author, input.username))
-        .innerJoin(user, eq(posts.author, user.id))
+        .innerJoin(user, eq(posts.author, user.username))
         .orderBy(desc(posts.created_at))
         .limit(100);
       return allPosts;
@@ -84,7 +84,7 @@ export const appRouter = t.router({
       const { db, session } = ctx;
       await db.insert(posts).values({
         id: crypto.randomUUID(),
-        author: session.user.userId,
+        author: session.user.githubUsername,
         content: input.content,
       });
     }),

@@ -6,7 +6,7 @@ export const posts = sqliteTable("posts", {
   content: text("content", { length: 280 }),
   author: text("author", { length: 15 })
     .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
+    .references(() => user.username, { onDelete: "cascade" }),
   created_at: text("created_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
