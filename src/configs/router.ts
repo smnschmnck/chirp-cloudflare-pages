@@ -1,5 +1,5 @@
 import { Outlet, RootRoute, Route, Router } from "@tanstack/react-router";
-import { Home } from "../components/Home";
+import { Home } from "../pages/Home";
 
 const rootRoute = new RootRoute({
   component: Outlet,

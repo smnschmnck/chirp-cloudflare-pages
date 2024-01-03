@@ -1,6 +1,6 @@
 import { FC, FormEvent, useState } from "react";
 import { trpc } from "../utils/trpc";
-import { Spinner } from "./Spinner";
+import { Spinner } from "../components/Spinner";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
