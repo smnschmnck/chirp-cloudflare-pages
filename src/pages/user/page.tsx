@@ -2,12 +2,19 @@ import { FC } from "react";
 import { userRoute } from "./route";
 import { trpc } from "../../utils/trpc";
 import { PostsList } from "../../components/PostsList";
+import { Spinner } from "../../components/ui/Spinner";
 
 export const UserPage: FC = () => {
   const { params } = userRoute.useLoaderData();
   const { username } = params;
   const { data: userPosts } = trpc.getAllPostsByUser.useQuery({ username });
-  const { data: userInfo } = trpc.getUserInfo.useQuery({ username });
+  const { data: userInfo, isLoading } = trpc.getUserInfo.useQuery({ username });
+
+  if (isLoading) {
+    <div className="flex h-full w-[2000px] flex-col border-x text-white">
+      <Spinner />
+    </div>;
+  }
 
   return (
     <div className="flex h-full w-[2000px] flex-col border-x text-white">
