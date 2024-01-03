@@ -71,6 +71,13 @@
       "when": 1704235832224,
       "tag": "0009_lovely_carmella_unuscione",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1704299836235,
+      "tag": "0010_dry_karma",
+      "breakpoints": true
     }
   ]
 }

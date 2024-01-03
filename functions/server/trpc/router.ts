@@ -46,6 +46,7 @@ export const appRouter = t.router({
         id: posts.id,
         content: posts.content,
         author: user.username,
+        authorPicture: user.profilePictureUrl,
         timestamp: posts.created_at,
       })
       .from(posts)

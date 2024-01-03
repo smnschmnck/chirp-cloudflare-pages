@@ -8,7 +8,7 @@ import { OAuthRequestError } from "@lucia-auth/oauth";
 import { Env } from "@functions/types/env";
 
 export const onRequest = async (
-  context: EventContext<Env, string, unknown>
+  context: EventContext<Env, string, unknown>,
 ) => {
   const { request, env } = context;
   const githubAuth = initializeGithubAuth(env);
@@ -34,6 +34,7 @@ export const onRequest = async (
       const user = await createUser({
         attributes: {
           username: githubUser.login,
+          profile_picture_url: githubUser.avatar_url,
         },
       });
       return user;

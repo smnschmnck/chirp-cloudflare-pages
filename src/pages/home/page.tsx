@@ -69,16 +69,22 @@ export const HomePage: FC = () => {
           <ul>
             {posts?.map((p) => (
               <li
-                className="flex min-h-16 max-w-full flex-col justify-center border-b px-4 py-2"
                 key={p.id}
+                className="flex min-h-16 max-w-full items-center gap-3 border-b px-4 py-2"
               >
-                <div className="flex justify-between text-sm">
-                  <p>{p.author}</p>
-                  <p className="text-gray-500">
-                    {dayjs(p.timestamp).fromNow()}
-                  </p>
+                <img
+                  src={p.authorPicture ?? ""}
+                  className="h-10 w-10 overflow-hidden rounded-full"
+                />
+                <div className="grow">
+                  <div className="flex justify-between text-sm">
+                    <p>@{p.author}</p>
+                    <p className="text-gray-500">
+                      {dayjs(p.timestamp).fromNow()}
+                    </p>
+                  </div>
+                  <p>{p.content}</p>
                 </div>
-                <p>{p.content}</p>
               </li>
             ))}
           </ul>

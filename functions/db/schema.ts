@@ -16,6 +16,7 @@ export type Post = InferSelectModel<typeof posts>;
 export const user = sqliteTable("user", {
   id: text("id", { length: 15 }).notNull().primaryKey(),
   username: text("username").unique(),
+  profilePictureUrl: text("profile_picture_url"),
 });
 export type User = InferSelectModel<typeof user>;
 
