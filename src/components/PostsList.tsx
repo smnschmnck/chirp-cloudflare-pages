@@ -15,7 +15,7 @@ type Post = {
 
 export const PostsList: FC<{ posts: Post[] }> = ({ posts }) => {
   return (
-    <div className="h-full overflow-y-scroll">
+    <div className="h-full w-full overflow-y-scroll">
       <ul>
         {posts.map((p) => (
           <li
