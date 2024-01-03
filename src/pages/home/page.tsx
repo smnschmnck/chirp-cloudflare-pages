@@ -59,9 +59,9 @@ export const HomePage: FC = () => {
   return (
     <div className="flex h-full w-full justify-center bg-gray-950 text-white">
       <div className="w-full px-12 py-6">
-        <a className="text-xl font-bold" href="/">
+        <Link className="text-xl font-medium" to="/">
           Chirp
-        </a>
+        </Link>
       </div>
       <div className="flex h-full min-w-96 max-w-96 flex-col border-x text-white">
         {hasUser && <CreatePostForm refetchPosts={refetchPosts} />}
