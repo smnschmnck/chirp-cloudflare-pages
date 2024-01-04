@@ -1,6 +1,5 @@
 import { FC, FormEvent, useState } from "react";
 import { PostsList } from "../../components/PostsList";
-import { Spinner } from "../../components/ui/Spinner";
 import { trpc } from "../../utils/trpc";
 
 const CreatePostForm: FC<{ refetchPosts: () => void }> = ({ refetchPosts }) => {
@@ -39,16 +38,8 @@ const CreatePostForm: FC<{ refetchPosts: () => void }> = ({ refetchPosts }) => {
 };
 
 export const HomePage: FC = () => {
-  const { data: userData, isLoading: isLoadingUser } = trpc.getUser.useQuery();
+  const { data: userData } = trpc.getUser.useQuery();
   const { data: posts, refetch: refetchPosts } = trpc.getAllPosts.useQuery();
-
-  if (isLoadingUser) {
-    return (
-      <div className="flex h-full w-full items-center justify-center">
-        <Spinner />
-      </div>
-    );
-  }
 
   const hasUser = !!userData?.user;
 
